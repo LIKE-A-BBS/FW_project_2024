@@ -1,4 +1,4 @@
-module sti_transmitter
+module sti_receiver
 #(
     parameter   BW = 4,
     parameter   CRC_BW = 3,
@@ -6,18 +6,18 @@ module sti_transmitter
 );
 
 	reg 						clk, rstn;
-    reg 		[BW-1:0] 		mat_in 	[0:N-1];
-	reg 		[BW+CRC_BW-1:0] mat_out [0:N-1];
-	reg 		[BW+CRC_BW-1:0] out_mat;
-	reg 		[BW-1:0] 		in;
-    wire 		[BW+CRC_BW-1:0] out;
+    reg 		[BW+CRC_BW-1:0] mat_in 	[0:N-1];
+	reg 		[BW-1:0] mat_out [0:N-1];
+	reg 		[BW-1:0] out_mat;
+	reg 		[BW+CRC_BW-1:0] in;
+    wire 		[BW-1:0] out;
 
 	integer i=0, j=0;
 	integer err=0;
     
 	always #5 clk <= ~clk;
 
-	transmitter send (.out(out), .in(in), .clk(clk), .rstn(rstn));
+	receiver ff (.out(out), .in(in), .clk(clk), .rstn(rstn));
 	initial
 	begin
 		clk = 1;
@@ -29,8 +29,8 @@ module sti_transmitter
 
 	initial
 	begin
-		$readmemh("input_hex.txt", mat_in);
-		$readmemh("Codeword_hex.txt", mat_out);
+		$readmemh("noisy_codeword_hex.txt", mat_in);
+		$readmemh("out_hex.txt", mat_out);
 	end
 
 	initial
