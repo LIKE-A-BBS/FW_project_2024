@@ -8,7 +8,7 @@
 ### Receiver
 1. 
 
-## ARQ
+## ARQ FSMs Design
 ### Stop-and-Wait
 
 ### Go-Back-N
