@@ -7,3 +7,10 @@
 4. Send codeword to Receiver
 ### Receiver
 1. 
+
+## ARQ
+### Stop-and-Wait
+
+### Go-Back-N
+
+### Selective-Repeat
