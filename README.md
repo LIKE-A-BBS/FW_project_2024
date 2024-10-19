@@ -6,4 +6,4 @@
 3. Combine input and remainder
 4. Send codeword to Receiver
 ### Receiver
-1. Inputs are given noisy codeword that 
+1. 
