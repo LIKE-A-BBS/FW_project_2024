@@ -79,7 +79,6 @@
 !*.xlsx
 !*.pdf
 !*.md
-*2020170926.pdf
 *.cache
 *.hw
 *.ip_user_files
