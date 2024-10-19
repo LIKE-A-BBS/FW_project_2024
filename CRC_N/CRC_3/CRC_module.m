@@ -3,9 +3,9 @@ clearvars;
 
 N = 10;                                                                     % # of input data
 p = 0.01;                                                                   % Bit Error Rate(BER)
-input_bit = 40;                                                             % Input(payload) bitwidth
-CRC_bit = 8;                                                                % CRC bitwidth
-divisor = double(0b100000111);                                              % Divisor
+input_bit = 8;                                                              % Input(payload) bitwidth
+CRC_bit = 3;                                                                % CRC bitwidth
+divisor = double(0b1011);                                                   % Divisor
 
 %% FER calculation
 FER = (1 - (1-p)^(input_bit+CRC_bit));                                      % Frame Error Rate(FER)

@@ -1,13 +1,16 @@
 %% Initial conditions
 clearvars;
 
-N = 100;                % Number of input
-p = 0.02;               %bit error rate(BER)
-input_bit = 4;          % input bitwidth
-CRC_bit = 3;      % CRC bitwidth
-divisor = 0b1011u32;    % Divisor
+N = 10;                                                                     % # of input data
+p = 0.01;                                                                   % Bit Error Rate(BER)
+input_bit = 40;                                                             % Input(payload) bitwidth
+CRC_bit = 8;                                                                % CRC bitwidth
+divisor = double(0b100000111);                                              % Divisor
 
-%% Generate input & Calc CRC
+%% FER calculation
+FER = (1 - (1-p)^(input_bit+CRC_bit));                                      % Frame Error Rate(FER)
+
+%% Input generation, CRC calculation, and Codeword creation
 input = randi(power(2,input_bit)-1,[N 1]);
 
 codeword_length = input_bit + CRC_bit;
@@ -27,7 +30,7 @@ for i = 1:N
 end
 codeword = shift_input + CRC;
 
-%% 전송과정 중 오류 
+%% Noise is added as the signal passes through the channel 
 noisy_data = zeros([N 1]);
 for l = 1:N
     for i = 0:codeword_length-1
@@ -35,7 +38,7 @@ for l = 1:N
     end
 end
 noisy_codeword = bitxor(codeword,noisy_data);
-%% 오류 검증
+%% Error detection
 remainder2 = noisy_codeword;
 error_detect = zeros([N 1]);
 out = zeros([N 1]);
@@ -53,17 +56,12 @@ for i = 1:N
     end
 end
 
-%% File export
-% Sender
+%% Generate a .txt file
+% Transmitter
 input_hex = fopen('./input_hex.txt', 'w');
 for k = 1:N
     pr_input_h = input(k);
     fprintf(input_hex,'%x \n', pr_input_h);
-end
-CRC_hex = fopen('./CRC_hex.txt', 'w');
-for k = 1:N
-    pr_CRC_h = CRC(k);
-    fprintf(CRC_hex,'%x \n', pr_CRC_h);
 end
 Codeword_hex = fopen('./Codeword_hex.txt', 'w');
 for k = 1:N
