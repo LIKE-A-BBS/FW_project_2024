@@ -5,7 +5,9 @@ N = 10;                                                                     % Nu
 p = 0.01;                                                                   % Bit Error Rate(BER)
 input_bit = 40;                                                             % Input bitwidth
 CRC_bit = 8;                                                                % CRC bitwidth
-divisor = double(0b100000111u64);                                           % Divisor
+divisor = double(0b100000111);                                              % Divisor
+%%
+FER = (1 - (1-p)^(input_bit+CRC_bit));                                      % Frame Error Rate(FER)
 %% Generate input & Calc CRC
 input = randi(power(2,input_bit)-1,[N 1]);
 
