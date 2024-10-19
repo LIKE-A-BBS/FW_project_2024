@@ -1,11 +1,11 @@
 %% Initial conditions
 clearvars;
 
-N = 10000;                % Number of input
-p = 0.01;               %bit error rate(BER)
-input_bit = 40;          % input bitwidth
-CRC_bit = 8;      % CRC bitwidth
-divisor = double(0b100000111u64);    % Divisor
+N = 10000;                                                                  % Number of input
+p = 0.01;                                                                   %bit error rate(BER)
+input_bit = 40;                                                             % input bitwidth
+CRC_bit = 8;                                                                % CRC bitwidth
+divisor = double(0b100000111u64);                                           % Divisor
 %% Generate input & Calc CRC
 input = randi(power(2,input_bit)-1,[N 1]);
 

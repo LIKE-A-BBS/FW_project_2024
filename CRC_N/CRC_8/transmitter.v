@@ -13,7 +13,7 @@ module transmitter
     wire [CRC_BW-1:0] CRC;
     reg [BW-1:0] in_d;
 
-    CRC_3b C1 (.CRC(CRC), .in({in_d, {(CRC_BW){1'b0}}}));
+    CRC_8b C1 (.CRC(CRC), .in({in_d, {(CRC_BW){1'b0}}}));
 
     assign out_t = {in_d, CRC};
 

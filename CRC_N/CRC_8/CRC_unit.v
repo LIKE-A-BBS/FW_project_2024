@@ -1,6 +1,6 @@
 module CRC_unit
 #(
-    parameter   BW = 3
+    parameter   BW = 8
 )
 (
     output      [BW-1:0] out,
