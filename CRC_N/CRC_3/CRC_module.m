@@ -30,7 +30,7 @@ for i = 1:N
 end
 codeword = shift_input + CRC;
 
-%% Noise is added as the signal passes through the channel 
+%% Noise added during transmission
 noisy_data = zeros([N 1]);
 for l = 1:N
     for i = 0:codeword_length-1
