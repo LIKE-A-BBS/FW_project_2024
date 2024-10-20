@@ -6,7 +6,7 @@ module FSM_SAW_transmitter
     parameter tp = 3        //propagation time
 )
 (
-    output reg state, next_state,
+    output reg [3:0] state, next_state,
 	output reg [4:0] out,                                          // send, rst_timer, copy, discard, add_timer,
 	input in,
     input clk, rstn
