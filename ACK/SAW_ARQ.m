@@ -10,6 +10,6 @@ ACK_size = 3;                       % Acknowledgement
 %%
 FER = 1 - ((1-BER)^frame_size);
 AER = 1 - ((1-BER)^ACK_size);       % ACK Error Rate
-tr = frame_size/bps;                % transmittion time
+tr = frame_size/bps;                % transmission time
 U = tr/(tr+2*tp);                   % Channel Utilization
 %%
