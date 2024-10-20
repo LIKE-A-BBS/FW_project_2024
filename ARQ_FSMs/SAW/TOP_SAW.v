@@ -8,17 +8,18 @@ module TOP_SAW
     reg [BW-1:0] frame, frame_t;
     wire [1:0] ctrl;
 
-
+    //Control
+    FSM_SAW fsm ();
 
     //Make frame
+    CRC crc ();
 
     //send frame
 
 
 
     //counter(timer)
-
-
+    counter cnt0 (.main(), .clk(), .rstn(), .append_main());
 
     // frame temp memory
     always @(posedge clk) begin
