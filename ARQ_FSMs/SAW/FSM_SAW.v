@@ -4,19 +4,19 @@ module FSM_SAW_transmitter
 #(
     parameter x = 10,
     parameter tp = 3,        // propagation time * 2 + alpha
-	parameter OUT_BW = 5
+	parameter OUT_BW = 5,
+		//States
+	parameter S0 = 0, S1 = 1, // S0 = Ready, S1 = Blocking
+    parameter S01 = 2, S02 = 3, S03 = 4
 )
 (
-    output reg 	[3:0] 			state, next_state,
-	output reg 	[OUT_BW-1:0] 	out,				// make_frame, copy, send, rst_timer, stop_timer,
+	output reg 	[OUT_BW-1:0] 	out,				// make_frame, copy, send, rst_timer, timer_on
 	input 		[2:0] 			in,					// enable-packet, time-out bit, ACK
     input 						clk, rstn
 );
+	reg [3:0] state, next_state;
 
-	//States
-	parameter S0 = 0, S1 = 1; // S0 = Ready, S1 = Blocking
-    parameter S01 = 2, S02 = 3, S03 = 4;
-    parameter S11 = 5, S12 = 6, S13 = 7, S14 = 8;
+
     /* 
     S0
     :Packet came from network layer
@@ -59,7 +59,7 @@ module FSM_SAW_transmitter
 			end
 			S03: begin
 				next_state <= S1;
-				out <= 5'b00010;
+				out <= 5'b00011;
 			end
 			S1: begin
 				if (in[1] == 1'b1) begin	// time out
@@ -67,22 +67,17 @@ module FSM_SAW_transmitter
 					out <= 5'b00100;
 				end
 				else if (in[0] == 1'b1) begin
-					next_state <= S11;
-					out <= 5'b00001;
+					next_state <= S0;
+					out <= 5'b00000;
 				end
 				else begin
 					next_state <= S1;
-					out <= {(OUT_BW){1'b0}};
+					out <= 5'b00001;
 				end
 			end
-			S11: begin
-				next_state <= S1;
-				out <= 5'b00010;
-			end
-			
             default: begin
                     next_state <= S0;
-                    out <= S0;
+                    out <= {(OUT_BW){1'b0}};
                 end
 		endcase
 	end

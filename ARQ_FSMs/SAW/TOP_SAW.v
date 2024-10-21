@@ -9,7 +9,7 @@ module TOP_SAW
     wire [1:0] ctrl;
 
     //Control
-    FSM_SAW_transmitter fsm ();
+    FSM_SAW_transmitter fsm (.out(), .in(), .clk(), .rstn());
 
     //Make frame
     CRC crc ();
