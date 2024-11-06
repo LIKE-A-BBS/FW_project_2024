@@ -1,15 +1,18 @@
 module TOP_SAW 
 #(
-    parameter BW = 10
+    parameter BW = 10,
+    parameter OUT_BW = 5,
+    parameter CNT_BW = 5
 )
 (
     input clk, rstn
 );
     reg [BW-1:0] frame, frame_t;
-    wire [1:0] ctrl;
-
+    wire [OUT_BW-1:0] ctrl;
+    wire [CNT_BW-1:0] cnt;
+    wire Packet, ACK;
     //Control
-    FSM_SAW_transmitter fsm (.out(), .in(), .clk(), .rstn());
+    FSM_SAW_transmitter fsm (.out(ctrl), .in({Packet, cnt[CNT_BW-1], ACK}), .clk(clk), .rstn(rstn));
 
     //Make frame
     CRC crc ();
@@ -19,7 +22,7 @@ module TOP_SAW
 
 
     //counter(timer)
-    counter cnt0 (.main(), .clk(), .rstn(), .append_main());
+    counter cnt0 (.main(cnt), .clk(clk), .rstn(ctrl[1]), .append_main(ctrl[0]));
 
     // frame temp memory
     always @(posedge clk) begin

@@ -1,6 +1,6 @@
 module counter
 #(
-    parameter BW = 3
+    parameter BW = 10
 )
 (
     output reg [BW-1:0] main,
